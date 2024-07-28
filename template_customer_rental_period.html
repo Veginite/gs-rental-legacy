@@ -1,0 +1,23 @@
+<script>
+  function setCustomerRentalPeriod(rentalObjectType, rentalObjectIndex, customerIndex){
+    function onSuccess2(dates){
+      document.getElementById("dateOut").value = dates[0];
+      document.getElementById("dateIn").value = dates[1];
+    }
+    google.script.run.withSuccessHandler(onSuccess2).getCustomerRentalPeriod(rentalObjectType, rentalObjectIndex, customerIndex);
+  }
+  
+  function updateCustomerRentalPeriod(forceBeginning){
+    var rentalObjectType = document.getElementById("itemListRentalObjectType").selectedIndex;
+    var rentalObjectIndex = document.getElementsByName("itemListRentalObject")[rentalObjectType].selectedIndex;
+    var customerIndex = 0;
+    
+    //If customer list is being fetched from server this function will probably fail to fetch dates due to server delay
+    if(!forceBeginning)
+    {
+      customerIndex = document.getElementById("itemListCustomer").selectedIndex;
+    }
+    
+    setCustomerRentalPeriod(rentalObjectType, rentalObjectIndex, customerIndex);
+  }
+</script>

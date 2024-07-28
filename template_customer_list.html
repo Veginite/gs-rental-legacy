@@ -1,0 +1,28 @@
+<script>
+  function updateCustomerList(){
+    var customerNumber = document.getElementById("itemListCustomer").length;
+    for(var i = 0; i < customerNumber; i++){
+      var element = document.getElementById("Customer" + i);
+      element.parentNode.removeChild(element);
+    }
+    
+    var element = document.getElementById("itemListRentalObjectType"); 
+    var typeIndex = element.selectedIndex;
+    var docName = element.options[typeIndex].innerHTML;
+    
+    element = document.getElementsByName("itemListRentalObject")[typeIndex];
+    var chairIndex = element.selectedIndex;
+    
+    element = document.getElementById("itemListCustomer");
+    var customerIndex = element.selectedIndex;
+    
+    if(typeIndex == 0) //Bilbarnstol
+    {
+      createListFromSheetColumn(docName, 4, 8, 3 + (9 * chairIndex), 1, "Customer");
+    }
+    else //Babyskydd
+    {
+      createListFromSheetColumn(docName, 4 + (10 * chairIndex), 47, 3, 1, "Customer");
+    }
+  }
+  </script>

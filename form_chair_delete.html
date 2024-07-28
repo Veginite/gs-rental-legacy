@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
+  </head>
+  <body>
+  <form id="chairForm" onsubmit="event.preventDefault(); google.script.run.deleteChair(this);">
+  Stol:<br>
+  <select id="itemListChair" name="itemListChair"></select><br><br>
+  </form>
+  </body>
+  <?!= include('template_item_list'); ?>
+  <script>
+  createListFromSheetColumn("Bilbarnstol", 2, "getChairNumber", 3, 9, "Chair");
+  var submit = document.createElement("input"); //Add a delete button to the chair list
+    submit.setAttribute("type", "submit");
+    submit.setAttribute("value", "Radera");
+    document.getElementById("chairListForm").appendChild(submit);
+  </script>
+</html>

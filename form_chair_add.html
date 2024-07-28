@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+      <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
+      <style>
+        input[type=number]{
+          width: 40px;
+        }
+      </style>
+  </head>
+  <body>
+    <form id="chairAddForm" onsubmit="event.preventDefault(); google.script.run.addChair(this);google.script.host.close();">
+    Modell/namn (NUMMER SÄTTS AUTOMATISKT):<br>
+    <input type="text" name="model" required><br>
+    Belastning:<br>
+    <input type="number" name="cap-min" required> - <input type="number" name="cap-max" required> kg<br>
+    Stoltyp:<br>
+    <select>
+      <option value="Bilbarnstol">Bilbarnstol</option>
+      <option value="Bältesstol">Bältesstol</option>
+    </select><br><br>
+    <input type="submit" value="Lägg till stol">
+    </form>
+  </body>
+  
+  <script>
+  
+  </script>
+</html>

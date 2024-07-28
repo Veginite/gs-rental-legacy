@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
+  </head>
+  <body onload="initForm();">
+    <form id="rentalForm" onsubmit="event.preventDefault(); google.script.run.extendRent(this);">
+      <span>Uthyrningstyp:</span><br>
+      <select id="itemListRentalObjectType" name="itemListRentalObjectType" onchange="updateForm(); updateCustomerRentalPeriod(1);">
+        <option value="0">Bilbarnstol</option>
+        <option value="1">Babyskydd</option>
+      </select><br>
+      <span>Uthyrningsobjekt:</span><br>
+      <select id="itemListChair" name="itemListRentalObject" onchange="updateCustomerList(); updateCustomerRentalPeriod(1);"></select>
+      <select id="itemListCarrier" name="itemListRentalObject" onchange="updateCustomerList(); updateCustomerRentalPeriod(1);" hidden disabled>
+        <option value="0">Korttid</option>
+        <option value="1">Långtid</option>
+      </select>
+      <br>
+      <span>Kund:</span><br>
+      <select id="itemListCustomer" name="itemListCustomer" onchange="updateCustomerRentalPeriod(0);"></select><br>
+      <span>Utlämnades:</span><br>
+      <input type="date" name="dateOut" id="dateOut" readonly><br>
+      <span>Återlämnas:</span><br>
+      <input type="date" name="dateIn" id="dateIn" disabled><br> <!-- NOT PASSED ON SUBMIT -->
+      <span>Nytt återlämningsdatum:</span><br>
+      <input type="date" name="dateIn" id="dateExtended" required><br><br>
+      
+      <input type="submit" value="Fortsätt">
+    </form>
+  </body>
+  
+  <?!= include('template_item_list'); ?>
+  
+  <script>
+  function initForm(){
+    createListFromSheetColumn("Bilbarnstol", 2, "getChairNumber", 3, 9, "Chair");
+    createListFromSheetColumn("Bilbarnstol", 4, 8, 3, 1, "Customer");
+    
+    setCustomerRentalPeriod(0, 0, 0);
+    document.getElementById("dateExtended").value = new Date().toISOString().slice(0,10);
+  }
+  </script>
+  
+  <?!= include('template_customer_rental_period'); ?>
+  
+  <?!= include('template_customer_list'); ?>
+  
+  <?!= include('template_update_chair_form'); ?>
+</html>

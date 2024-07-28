@@ -1,0 +1,23 @@
+<script>
+  function updateForm(){
+  
+    var rentalTypeIndex = document.getElementById("itemListRentalObjectType").selectedIndex;
+    
+    var listIndexToDisplay = 0;
+    if(rentalTypeIndex == 0)
+    {
+      listIndexToDisplay = 1;
+    }
+    
+    var itemListRentalObject = document.getElementsByName("itemListRentalObject")[rentalTypeIndex];
+    itemListRentalObject.removeAttribute("hidden");
+    itemListRentalObject.removeAttribute("disabled");
+    
+    itemListRentalObject = document.getElementsByName("itemListRentalObject")[listIndexToDisplay];
+    itemListRentalObject.setAttribute("hidden", true);
+    itemListRentalObject.setAttribute("disabled", true);
+    
+    updateCustomerList();
+  }
+  
+  </script>

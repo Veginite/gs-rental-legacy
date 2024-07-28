@@ -1,0 +1,14 @@
+  <script type="text/javascript">
+  function createListFromSheetColumn(sheetName, columnNumber, amount, margin, spacing, itemListName){
+    google.script.run.withSuccessHandler(onSuccess).createListFromSheetColumn(sheetName, columnNumber, amount, margin, spacing);
+    function onSuccess(itemList){
+      for(var i = 0; i < itemList.length; i++){
+        var option = document.createElement("option");
+        option.setAttribute("id", itemListName + i);
+        option.setAttribute("value", i)
+        option.innerHTML = itemList[i];
+        document.getElementById("itemList" + itemListName).appendChild(option);
+      }
+    }
+  }
+  </script>

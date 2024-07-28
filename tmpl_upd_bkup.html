@@ -1,0 +1,79 @@
+<script>
+  function updateForm(addChairList, addCustomerList){
+    purgeForm();
+    
+    //--------------------------Recreate chair form-------------------------------
+    
+    var itemListTypeSelectedIndex = document.getElementById("itemListType").selectedIndex;
+    var docName = itemListType.options[itemListType.selectedIndex].innerHTML;
+    
+    var html = "<br>";
+    if(addChairList)
+    {
+      if(itemListTypeSelectedIndex == 0) //Bilbarnstol
+      {
+        html += ""
+        + "<span>Stol:</span><br>"
+        + "<select id='itemListChair' name='itemListChair'></select><br>"
+      }
+      else //Babyskydd
+      {
+        html += ""
+        + "<span>Hyrningstyp:</span><br>"
+        + "<select id='itemListChair' name='itemListChair'>"
+        + "<option id='Chair0' value='0'>Korttid</option>"
+        + "<option id='Chair1' value='1'>Långtid</option>"
+        + "</select><br>"
+      }
+    }
+  
+    if(addCustomerList)
+    {
+      html += "<span>Kund:</span><br>";
+      html += "<select id='itemListCustomer' name='itemListCustomer'></select><br>";
+    }
+    html += "<br><input id='submitChair' type='submit'>";
+  
+    var template = document.createElement("template");
+    template.innerHTML = html;
+  
+    document.getElementById("chairListForm").appendChild(template.content);
+    
+    //--------------Add attributes to form and insert customer list----------------
+    
+    document.getElementById("submitChair").setAttribute("value", document.getElementById("submitText").innerHTML);
+  
+    if(addCustomerList)
+    {
+      document.getElementById("itemListChair").setAttribute("onchange", "updateCustomerList();");
+    }
+  
+    if(addChairList && itemListTypeSelectedIndex == 0) //Don't create chair list for "Babyskydd"
+    {
+      createListFromSheetColumn(docName, 2, "getChairNumber", 3, 9, "Chair");
+    }
+    if(addCustomerList)
+    {
+      if(itemListTypeSelectedIndex == 0) //Bilbarnstol
+      {
+        createListFromSheetColumn(docName, 4, 8, 3, 1, "Customer");
+      }
+      else //Babyskydd
+      {
+        var chairIndex = document.getElementById("itemListChair").selectedIndex;
+        createListFromSheetColumn(docName, 4 + (9*chairIndex), 47, 3, 1, "Customer");
+      }
+    }
+  }
+  
+  //Remove all form child elements BUT NOT the rental type list
+  function purgeForm(){
+    var e = document.getElementById("chairListForm");
+    var child = e.lastElementChild;
+    while (child && child.id != "itemListType")
+    { 
+      e.removeChild(child); 
+      child = e.lastElementChild;
+    }
+  }
+  </script>

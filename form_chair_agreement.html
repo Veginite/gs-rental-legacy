@@ -1,0 +1,56 @@
+<!-- COMPLETED  --->
+
+<html>
+  <head>
+    <base target="_top">
+    <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
+    <style>
+      /* For some reason, the default alignment is center */
+      select{
+        text-align: left;
+      }
+    </style>
+  </head>
+  <body onload="initForm();">
+    <form id="rentalForm" onsubmit="google.script.run.rentalAgreement(this);">
+      <span>Uthyrningstyp:</span><br>
+      <select id="itemListRentalObjectType" name="itemListRentalObjectType" onchange="updateForm();updateCustomerRentalPeriod(1);">
+        <option value="0">Bilbarnstol</option>
+        <option value="1">Babyskydd</option>
+      </select><br>
+      <span>Uthyrningsobjekt:</span><br>
+      <select id="itemListChair" name="itemListRentalObject" onchange="updateCustomerList();updateCustomerRentalPeriod(1);"></select>
+      <select id="itemListCarrier" name="itemListRentalObject" onchange="updateCustomerList(); updateCustomerRentalPeriod(1);" hidden disabled>
+        <option value="0">Korttid</option>
+        <option value="1">Långtid</option>
+      </select>
+      <br>
+      <span>Kund:</span><br>
+      <select id="itemListCustomer" name="itemListCustomer" onchange="updateCustomerRentalPeriod(0);"></select><br>
+      <span>Utlämnades:</span><br>
+      <input type="date" name="dateOut" id="dateOut" disbled><br>
+      <span>Återlämnas:</span><br>
+      <input type="date" name="dateIn" id="dateIn" disabled><br>
+      Utlämnas av:<br>
+      <input type="text" name="employee"><br><br>
+      <input type="submit" value="Till kontrakt">
+    </form>
+  </body>
+  
+  <?!= include('template_item_list'); ?>
+  
+  <script>
+  function initForm(){
+    createListFromSheetColumn("Bilbarnstol", 2, "getChairNumber", 3, 9, "Chair");
+    createListFromSheetColumn("Bilbarnstol", 4, 8, 3, 1, "Customer");
+    
+    setCustomerRentalPeriod(0, 0, 0); //Sets dateOut and DateIn values on document load
+  }
+  </script>
+  
+  <?!= include('template_customer_rental_period'); ?>
+  
+  <?!= include('template_customer_list'); ?>
+  
+  <?!= include('template_update_chair_form'); ?>
+</html>
